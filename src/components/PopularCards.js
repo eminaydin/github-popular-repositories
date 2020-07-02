@@ -1,13 +1,36 @@
-import React from 'react';
-import { Button, Card, Image, CardGroup } from 'semantic-ui-react'
-const PopularCards = ({ popularRepos }) => {
+import React, { useState } from 'react';
+import { Button, Card, Image, CardGroup, Rating } from 'semantic-ui-react'
+import Moment from 'react-moment';
+import store from '../helpers/store';
+import { connect } from 'react-redux';
+
+const PopularCards = (props) => {
+    const [starred, setStarred] = useState([]);
+
+    const clickHandler = id => {
+
+        if (!starred.find(repoId => {
+            return repoId.id === id
+        })) {
+            props.addStar(starred)
+            setStarred([
+                ...starred, props.repos.find(repoId => {
+                    return repoId.id === id
+                })
+            ])
+        }
+    }
+    console.log(props.state);
+
     return (
         <CardGroup>
-            {popularRepos.items.map(({ id, owner, name, created_at, description, html_url, homepage }) => {
+            {props.repos.map(({ id, owner, name, created_at, description, html_url, homepage, stargazers_count }) => {
                 return (
-                    <Card key={id}>
+                    <Card key={id} >
                         <Card.Content>
+                            <Rating onClick={() => clickHandler(id)} />
                             <Image
+                                circular
                                 floated='right'
                                 size='mini'
                                 src={owner.avatar_url}
@@ -21,6 +44,9 @@ const PopularCards = ({ popularRepos }) => {
                             <Card.Description>
                                 {description}
                             </Card.Description>
+                        </Card.Content>
+                        <Card.Content extra>
+                            <span>{stargazers_count} stars </span>
                         </Card.Content>
                         <Card.Content extra>
                             <Button.Group>
@@ -37,5 +63,21 @@ const PopularCards = ({ popularRepos }) => {
         </CardGroup>
     );
 }
+const mapStateToProps = (state) => {
+    return {
+        state
+    }
+}
 
-export default PopularCards;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addStar: (value) => {
+            dispatch({
+                type: "STAR_REPO",
+                payload: value
+            })
+        }
+
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(PopularCards);
