@@ -1,50 +1,62 @@
 import React, { useState } from 'react';
-import { Grid, Menu, Segment } from 'semantic-ui-react'
+import { Input, Menu, Segment } from 'semantic-ui-react'
 import PopularCards from './PopularCards';
-const MainMenu = () => {
-    const [activeItem, setActiveItem] = useState("bio");
-    const handleItemClick = (e, { name }) => setActiveItem(name);
+import { connect } from 'react-redux';
+
+const MainMenu = (props) => {
+    const [activeItem, setActiveItem] = useState('home');
+    const handleItemClick = (e, { name }) => {
+        setActiveItem(name)
+        console.log(props);
+    };
     const [popularRepos, setPopularRepos] = useState("");
     const fetchApi = () => {
-        fetch("https://api.github.com/search/repositories?q=created:>2017-01-10&sort=stars&order=desc")
+        fetch("https://api.github.com/search/repositories?q=stars:>1+language:All&sort=stars&order=desc&type=Repositories")
             .then(res => res.json())
             .then(data => setPopularRepos(data.items))
     }
+    console.log(props.state);
 
     return (
-        <Grid>
-            <Grid.Column width={4}>
-                <Menu fluid vertical tabular>
-                    <Menu.Item
-                        name='bio'
-                        active={activeItem === 'bio'}
-                        onClick={handleItemClick}
-                    />
-                    <Menu.Item
-                        name='pics'
-                        active={activeItem === 'pics'}
-                        onClick={fetchApi}
-                    />
-                    <Menu.Item
-                        name='companies'
-                        active={activeItem === 'companies'}
-                        onClick={handleItemClick}
-                    />
-                    <Menu.Item
-                        name='links'
-                        active={activeItem === 'links'}
-                        onClick={handleItemClick}
-                    />
-                </Menu>
-            </Grid.Column>
+        <div>
+            <Menu pointing>
+                <Menu.Item
+                    name='home'
+                    active={setActiveItem === 'home'}
+                    onClick={handleItemClick}
+                />
+                <Menu.Item
+                    name='messages'
+                    active={setActiveItem === 'messages'}
+                    onClick={fetchApi}
+                />
+                <Menu.Item
+                    name='friends'
+                    active={setActiveItem === 'friends'}
+                    onClick={handleItemClick}
+                />
+                <Menu.Menu position='right'>
+                    <Menu.Item>
+                        <Input icon='search' placeholder='Search...' />
+                    </Menu.Item>
+                </Menu.Menu>
+            </Menu>
 
-            <Grid.Column stretched width={12}>
-                <Segment>
-                    {popularRepos && <PopularCards repos={popularRepos} />}
-                </Segment>
-            </Grid.Column>
-        </Grid>
+            <Segment>
+                {popularRepos && <PopularCards repos={popularRepos} />}
+
+            </Segment>
+        </div>
+
+
     );
 }
 
-export default MainMenu;
+const mapStateToProps = (state) => {
+    return {
+        state
+    }
+}
+
+export default connect(mapStateToProps)(MainMenu);
+
