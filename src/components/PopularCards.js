@@ -1,39 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { CardGroup, Rating, Segment, Container } from 'semantic-ui-react'
-import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader"
-import { connect } from 'react-redux';
-import Repository from './Repository';
-import { getPopularRepos } from '../lib/api';
-import { getStarredRepos } from '../lib/localstorage';
+import React, { useState } from "react";
+import { CardGroup, Segment, Container } from "semantic-ui-react";
+import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
+import { connect } from "react-redux";
+import Repository from "./Repository";
+import "../App.scss";
 
-const PopularCards = (props) => {
-    const { popularRepos } = props
-
-    return (
-        <Segment inverted className="popularcards-wrapper">
-            {
-                popularRepos ?
-                    <CardGroup className="main-cards">
-                        {popularRepos.map((repository) => {
-                            return (
-                                <Repository repository={repository} />
-                            )
-                        })}
-                    </CardGroup>
-                    :
-                    <Container className="loaderSpinner">
-                        <ClimbingBoxLoader color={"#00b5ad"} />
-                    </Container>
-            }
-        </Segment >
-    );
-}
+const PopularCards = ({ popularRepos }) => {
+  const [showLoading, setShowLoading] = useState(false);
+  setTimeout(() => {
+    setShowLoading(false);
+  }, 2000);
+  return (
+    <Segment inverted className="popularcards-wrapper">
+      {showLoading ? (
+        <Container className="loaderSpinner">
+          <ClimbingBoxLoader color={"#00b5ad"} />
+        </Container>
+      ) : (
+        <CardGroup className="main-cards">
+          {popularRepos.map((repository) => {
+            return <Repository repository={repository} key={repository.id} />;
+          })}
+        </CardGroup>
+      )}
+    </Segment>
+  );
+};
 
 const mapStateToProps = (state) => {
-    return {
-        popularRepos: state.popularRepos
-    }
-}
-
+  return {
+    popularRepos: state.popularRepos,
+  };
+};
 
 export default connect(mapStateToProps)(PopularCards);
