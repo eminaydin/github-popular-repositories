@@ -12,4 +12,4 @@ At the beginning setup of Redux was a little bit complicated. Before starting I 
 
 Another challenge was the file structure. On the way I have changed it several times because at the beginning I was more focused on getting the thing done, instead of functionality. Once I have the core of the application I was more focused on the reusability, which I think at the end has a great result. With the structure right now, the logic of the application has been separated to small controllable pieces where I don't need to check every component if there is any conflict.
 
-If time allows, I am willing to add filter functionality where user can select the language and get the popular repositories of the corresponding language itself. This will be probably the next update.
+Live version of the project can be seen here: https://github-popular-repositories.netlify.app/
