@@ -6,7 +6,7 @@ import {
   SET_LANGUAGE,
 } from "../lib/ActionTypes";
 
-const initialState = { popularRepos: [], starredRepos: [], language: "all" };
+const initialState = { popularRepos: [], starredRepos: [] };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -26,12 +26,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         starredRepos: action.payload,
       };
-    case SET_LANGUAGE:
-      return {
-        ...state,
-        language: action.payload,
-      };
-
     default:
       return state;
   }
