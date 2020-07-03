@@ -3,7 +3,6 @@ import {
   GET_POPULAR_REPOS,
   STAR_REPO,
   SET_STARRED_REPOS,
-  SET_LANGUAGE,
 } from "../lib/ActionTypes";
 
 const initialState = { popularRepos: [], starredRepos: [] };
