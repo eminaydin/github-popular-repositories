@@ -1,68 +1,15 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## The Project
 
-## Available Scripts
+A website bootstrapped by React, where you can see the popular repositories of the week and able to star them. Along with React I have used several technologies such as `Redux` to get advantage of the global store,`react-router-dom` for the page navigations, `react-semantic-ui` for the pre-defined styles, `moment-js` to parse the date to formatted version and `react-spinners` to display loader spinners.
 
-In the project directory, you can run:
+The main idea was to display popular repositories and let the user to star them. After that, display the starred repositories in another page. I have played with Github API several times before, so from the beginning I knew which API endpoint I had to make request to. As I wanted to display starred repositories in another section, it was also clear that I had to use `react-router-dom`. After having a picture I have estimated of 6 hours of time to complete the core of the application which was succeeded. But I also wanted to play with the styles and have the best possible folder structure while providing reusable code. To do all of this, I have set 24 hours as a goal to myself but at the end I didn't even need the rest of 6 hours.
 
-### `yarn start`
+Basically, on the landing page user will be greeted with the popular repositories that has been fetched from Github API. Each of the repositories has a card structure with adequate amount of information while having two buttons for each. Buttons represent official website and Github repositories. User can select to navigate among each of the links. Each card has a star for itself and if user is to click the star the repository will be stored both in store and the localstorage while being available in the result page.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Challenges
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+At the beginning setup of Redux was a little bit complicated. Before starting I already had where to dispatch and get the state to props. But the connection of the pages took me a while. I could achieve exact same thing with the React state itself but considering what I would like to achieve, it might be even more complicated than Redux itself. Along the way I've got impressed once again with the logic behind the Redux as it already covers most of the edge cases and enables you to reach the state regardless of your components position.
 
-### `yarn test`
+Another challenge was the file structure. On the way I have changed it several times because at the beginning I was more focused on getting the thing done, instead of functionality. Once I have the core of the application I was more focused on the reusability, which I think at the end has a great result. With the structure right now, the logic of the application has been separated to small controllable pieces where I don't need to check every component if there is any conflict.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+If time allows, I am willing to add filter functionality where user can select the language and get the popular repositories of the corresponding language itself. This will be probably the next update.

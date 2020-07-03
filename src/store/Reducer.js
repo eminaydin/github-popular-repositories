@@ -27,7 +27,6 @@ const reducer = (state = initialState, action) => {
         starredRepos: action.payload,
       };
     case SET_LANGUAGE:
-      console.log(action.payload);
       return {
         ...state,
         language: action.payload,

@@ -16,7 +16,7 @@ const App = ({ getPopularRepos, dispatchSetStarredRepos }) => {
     fetchPopularRepos(getPopularRepos);
     // dispatch the action and get the local storage
     dispatchSetStarredRepos(getStarredRepos());
-  }, []);
+  }, [dispatchSetStarredRepos, getPopularRepos]);
 
   return (
     <Router>
