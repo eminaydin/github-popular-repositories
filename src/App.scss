@@ -23,7 +23,7 @@ body {
   @include flex;
 }
 .starredRepos-wrapper {
-  height: calc(100vh - 100px) !important;
+  height: $main-height;
   background: $main-color !important;
 }
 .button {
