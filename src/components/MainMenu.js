@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Menu, Select } from "semantic-ui-react";
 import { Link, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
-import { SET_LANGUAGE } from "../lib/ActionTypes";
+import { GET_POPULAR_REPOS } from "../lib/ActionTypes";
 import { options } from "../lib/SelectOptions";
 import "../App.scss";
+import { fetchPopularRepos } from "../lib/FetchApi";
 
-const MainMenu = ({ dispatchLanguageValue }) => {
+const MainMenu = ({ getPopularRepos }) => {
   const [activeItem, setActiveItem] = useState("home");
   const location = useLocation().pathname;
   useEffect(() => {
@@ -23,7 +24,7 @@ const MainMenu = ({ dispatchLanguageValue }) => {
 
   const handleInputChange = (event) => {
     const query = event.target.textContent;
-    dispatchLanguageValue(query);
+    fetchPopularRepos(getPopularRepos, query);
   };
   return (
     <div>
@@ -45,7 +46,7 @@ const MainMenu = ({ dispatchLanguageValue }) => {
         <Menu.Menu position="right">
           <Menu.Item>
             <Select
-              placeholder="Languages"
+              placeholder="Select a language"
               options={options}
               onChange={handleInputChange}
             />
@@ -57,9 +58,9 @@ const MainMenu = ({ dispatchLanguageValue }) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    dispatchLanguageValue: (value) => {
+    getPopularRepos: (value) => {
       dispatch({
-        type: SET_LANGUAGE,
+        type: GET_POPULAR_REPOS,
         payload: value,
       });
     },

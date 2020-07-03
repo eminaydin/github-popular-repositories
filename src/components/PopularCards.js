@@ -6,7 +6,7 @@ import Repository from "./Repository";
 import "../App.scss";
 
 const PopularCards = ({ popularRepos }) => {
-  const [showLoading, setShowLoading] = useState(false);
+  const [showLoading, setShowLoading] = useState(true);
   setTimeout(() => {
     setShowLoading(false);
   }, 2000);
@@ -14,7 +14,7 @@ const PopularCards = ({ popularRepos }) => {
     <Segment inverted className="popularcards-wrapper">
       {showLoading ? (
         <Container className="loaderSpinner">
-          <ClimbingBoxLoader color={"#00b5ad"} />
+          <ClimbingBoxLoader color="#00b5ad" />
         </Container>
       ) : (
         <CardGroup className="main-cards">
