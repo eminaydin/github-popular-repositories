@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Menu, Select } from "semantic-ui-react";
 import { Link, useLocation } from "react-router-dom";
-import { connect } from "react-redux";
-import { GET_POPULAR_REPOS } from "../lib/ActionTypes";
-import { options } from "../lib/SelectOptions";
 import "../App.scss";
+import { Menu, Select } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { GET_POPULAR_REPOS, IS_LOADING } from "../lib/ActionTypes";
+import { options } from "../lib/SelectOptions";
 import { fetchPopularRepos } from "../lib/FetchApi";
 
-const MainMenu = ({ getPopularRepos }) => {
+const MainMenu = ({ getPopularRepos, isLoading }) => {
   const [activeItem, setActiveItem] = useState("home");
   const location = useLocation().pathname;
+
   useEffect(() => {
-    if (location === "/result") {
-      return setActiveItem("result");
-    } else {
-      return setActiveItem("home");
-    }
+    location === "/result" ? setActiveItem("result") : setActiveItem("home");
   }, [location]);
 
   const clickHandler = (e, { name }) => {
@@ -24,7 +21,8 @@ const MainMenu = ({ getPopularRepos }) => {
 
   const handleInputChange = (event) => {
     const query = event.target.textContent;
-    fetchPopularRepos(getPopularRepos, query);
+    isLoading(true);
+    fetchPopularRepos(getPopularRepos, isLoading, query);
   };
   return (
     <div>
@@ -61,6 +59,12 @@ const mapDispatchToProps = (dispatch) => {
     getPopularRepos: (value) => {
       dispatch({
         type: GET_POPULAR_REPOS,
+        payload: value,
+      });
+    },
+    isLoading: (value) => {
+      dispatch({
+        type: IS_LOADING,
         payload: value,
       });
     },

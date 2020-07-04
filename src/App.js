@@ -8,22 +8,26 @@ import PopularCards from "./components/PopularCards";
 import { connect } from "react-redux";
 import { fetchPopularRepos } from "./lib/FetchApi";
 import { getStarredRepos } from "./lib/Localstorage";
-import { GET_POPULAR_REPOS, SET_STARRED_REPOS } from "./lib/ActionTypes";
+import {
+  GET_POPULAR_REPOS,
+  SET_STARRED_REPOS,
+  IS_LOADING,
+} from "./lib/ActionTypes";
 
-const App = ({ getPopularRepos, dispatchSetStarredRepos }) => {
+const App = ({ getPopularRepos, setStarredRepos, isLoading }) => {
   useEffect(() => {
     // call the api and pass the dispatch along with it to send it to redux state
-    fetchPopularRepos(getPopularRepos);
+    fetchPopularRepos(getPopularRepos, isLoading);
     // dispatch the action and get the local storage
-    dispatchSetStarredRepos(getStarredRepos());
-  }, [dispatchSetStarredRepos, getPopularRepos]);
+    setStarredRepos(getStarredRepos());
+  }, [setStarredRepos, getPopularRepos, isLoading]);
 
   return (
     <Router>
       <MainMenu />
       <Switch>
-        <Route path="/" exact component={PopularCards} />
         <Route path="/result" component={StarredRepos} />
+        <Route path="/" exact component={PopularCards} />
       </Switch>
     </Router>
   );
@@ -37,9 +41,15 @@ const mapDispatchToProps = (dispatch) => {
         payload: value,
       });
     },
-    dispatchSetStarredRepos: (value) => {
+    setStarredRepos: (value) => {
       dispatch({
         type: SET_STARRED_REPOS,
+        payload: value,
+      });
+    },
+    isLoading: (value) => {
+      dispatch({
+        type: IS_LOADING,
         payload: value,
       });
     },
