@@ -3,9 +3,10 @@ import {
   GET_POPULAR_REPOS,
   STAR_REPO,
   SET_STARRED_REPOS,
+  IS_LOADING,
 } from "../lib/ActionTypes";
 
-const initialState = { popularRepos: [], starredRepos: [] };
+const initialState = { popularRepos: [], starredRepos: [], loading: true };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -24,6 +25,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         starredRepos: action.payload,
+      };
+    case IS_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
       };
     default:
       return state;
