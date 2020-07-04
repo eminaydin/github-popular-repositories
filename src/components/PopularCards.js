@@ -4,7 +4,6 @@ import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
 import { connect } from "react-redux";
 import Repository from "./Repository";
 import "../App.scss";
-import { IS_LOADING } from "../lib/ActionTypes";
 
 const PopularCards = ({ popularRepos, loading }) => {
   return (
@@ -30,14 +29,4 @@ const mapStateToProps = (state) => {
     loading: state.loading,
   };
 };
-const mapDispatchToProps = (dispatch) => {
-  return {
-    isLoading: (value) => {
-      dispatch({
-        type: IS_LOADING,
-        payload: value,
-      });
-    },
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(PopularCards);
+export default connect(mapStateToProps)(PopularCards);
