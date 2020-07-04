@@ -5,8 +5,7 @@ import { connect } from "react-redux";
 import { SET_STARRED_REPOS } from "../lib/ActionTypes";
 import "../App.scss";
 
-const Repository = (props) => {
-  const { repository, starredRepos, dispatchStarredRepos } = props;
+const Repository = ({ repository, starredRepos, setStarredRepos }) => {
   const {
     id,
     owner,
@@ -17,34 +16,28 @@ const Repository = (props) => {
     homepage,
     stargazers_count,
   } = repository;
-  const [starred, setStarred] = useState([]);
+  const [starred, setStarred] = useState({});
 
   useEffect(() => {
-    if (starredRepos) {
-      let isStarred = starredRepos.find((repo) => repo.id === id);
-      setStarred(isStarred);
-    }
+    let isStarred = starredRepos.find((repo) => repo.id === id);
+    setStarred(isStarred);
   }, [starredRepos, id]);
 
-  const clickHandler = (id) => {
+  const clickHandler = () => {
     if (starred) {
       //prevent adding the same card
-      const strepos = starredRepos.filter((repo) => repo.id !== id);
-      dispatchStarredRepos(strepos);
+      const filteredRepos = starredRepos.filter((repo) => repo !== starred);
+      setStarredRepos(filteredRepos);
     } else {
       // add card if its not starred yet
       const newStarredRepos = [...starredRepos, repository];
-      dispatchStarredRepos(newStarredRepos);
+      setStarredRepos(newStarredRepos);
     }
   };
   return (
     <Card key={id}>
       <Card.Content>
-        <Rating
-          icon={"star"}
-          onClick={() => clickHandler(id)}
-          rating={starred ? 1 : 0}
-        />
+        <Rating icon={"star"} onClick={clickHandler} rating={starred ? 1 : 0} />
         <Image circular floated="right" size="mini" src={owner.avatar_url} />
         <Card.Header>{name}</Card.Header>
         <Card.Meta>
@@ -100,7 +93,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    dispatchStarredRepos: (value) => {
+    setStarredRepos: (value) => {
       dispatch({
         type: SET_STARRED_REPOS,
         payload: value,
