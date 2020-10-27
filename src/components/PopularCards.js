@@ -1,11 +1,13 @@
 import React from "react";
 import { CardGroup, Segment, Container } from "semantic-ui-react";
 import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import Repository from "./Repository";
 import "../App.scss";
 
-const PopularCards = ({ popularRepos, loading }) => {
+const PopularCards = () => {
+  const popularRepos = useSelector((state) => state.popularRepos);
+  const loading = useSelector((state) => state.loading);
   return (
     <Segment inverted className="popularcards-wrapper">
       {loading ? (
@@ -23,10 +25,4 @@ const PopularCards = ({ popularRepos, loading }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    popularRepos: state.popularRepos,
-    loading: state.loading,
-  };
-};
-export default connect(mapStateToProps)(PopularCards);
+export default PopularCards;

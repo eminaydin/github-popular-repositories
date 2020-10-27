@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Button, Card, Image, Rating, Icon } from "semantic-ui-react";
 import Moment from "react-moment";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SET_STARRED_REPOS } from "../lib/ActionTypes";
 import "../App.scss";
 
-const Repository = ({ repository, starredRepos, setStarredRepos }) => {
+const Repository = ({ repository }) => {
   const {
     id,
     owner,
@@ -17,6 +17,8 @@ const Repository = ({ repository, starredRepos, setStarredRepos }) => {
     stargazers_count,
   } = repository;
   const [starred, setStarred] = useState({});
+  const starredRepos = useSelector((state) => state.starredRepos);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let isStarred = starredRepos.find((repo) => repo.id === id);
@@ -27,11 +29,11 @@ const Repository = ({ repository, starredRepos, setStarredRepos }) => {
     if (starred) {
       //prevent adding the same card
       const filteredRepos = starredRepos.filter((repo) => repo !== starred);
-      setStarredRepos(filteredRepos);
+      dispatch({ type: SET_STARRED_REPOS, payload: filteredRepos });
     } else {
       // add card if its not starred yet
       const newStarredRepos = [...starredRepos, repository];
-      setStarredRepos(newStarredRepos);
+      dispatch({ type: SET_STARRED_REPOS, payload: newStarredRepos });
     }
   };
   return (
@@ -85,20 +87,4 @@ const Repository = ({ repository, starredRepos, setStarredRepos }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    starredRepos: state.starredRepos,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setStarredRepos: (value) => {
-      dispatch({
-        type: SET_STARRED_REPOS,
-        payload: value,
-      });
-    },
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Repository);
+export default Repository;

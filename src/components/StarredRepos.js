@@ -10,10 +10,11 @@ import {
   Icon,
 } from "semantic-ui-react";
 import Moment from "react-moment";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import "../App.scss";
 
-const StarredRepos = ({ starredRepos }) => {
+const StarredRepos = () => {
+  const starredRepos = useSelector((state) => state.starredRepos);
   return (
     <Segment className="starredRepos-wrapper" inverted>
       {starredRepos.length > 0 ? (
@@ -92,9 +93,5 @@ const StarredRepos = ({ starredRepos }) => {
     </Segment>
   );
 };
-const mapStateToProps = (state) => {
-  return {
-    starredRepos: state.starredRepos,
-  };
-};
-export default connect(mapStateToProps)(StarredRepos);
+
+export default StarredRepos;
